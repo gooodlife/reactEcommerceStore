@@ -1,0 +1,581 @@
+import React, { Component } from 'react';
+import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Product from "./Product.js/index.js.js"
+import Title from "./Title"
+import{storeProducts} from "./Data"
+export default class Home extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      products: storeProducts
+    }
+  }
+  showProducts(){
+    console.log("Showing", this.state.products)
+    return this.state.products.map((i) => {
+      return ( <li>
+        <div>
+          <h4>{i.title}</h4>
+          <p>{i.info}</p>
+          <p>{i.img}</p>
+      <p>{i.price}</p>
+      
+          
+        
+        </div>
+        
+        </li>)
+    })
+  }
+ render(){
+  return(
+    <React.Fragment>
+      <div className="py-5">
+        <div className= "container">
+            <Title name ="our" title="products"/>
+          <div className="row">
+            <ul>
+             {
+               this.showProducts()
+             }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+    //productlist/home
+  )
+ }
+}
+</ProductWrapper></ProductWrapper>
+Product.propTypes ={
+ product:PropTypes.shape({
+   id:PropTypes.number,
+   img:PropTypes.string,
+   title:PropTypes.string,
+   price:PropTypes.number,
+   inCart:PropTypes.bool
+ }).isRequired
+}
+Product.propTypes ={
+ product:PropTypes.shape({
+   id:PropTypes.number,
+   img:PropTypes.string,
+   title:PropTypes.string,
+   price:PropTypes.number,
+   inCart:PropTypes.bool
+ }).isRequired
+};
+setProducts=()=>{
+    let tempProducts=[];
+storeProducts.forEach(item=>{
+    const singleItem = {...item};
+  
+ tempProducts=[...tempProducts,singleItem];
+})
+this.setState(()=>{
+    return{products:tempProducts}
+}
+Product.propTypes ={
+ product:PropTypes.shape({
+   id:PropTypes.number,
+   img:PropTypes.string,
+   title:PropTypes.string,
+   price:PropTypes.number,
+   inCart:PropTypes.bool
+ }).isRequired
+}
+
+    handleDetail=()=>{
+        console.log("hello from detail");
+    };
+    addToCart=()=>{
+        console.log("hello from add to cart");
+    };
+//Provider
+ componentDidMount(){
+        this.setProducts();
+    }
+   setProducts = () =>{
+       let tempProducts = [];
+       storeProducts.forEach(item => {
+           const singleItem = {...item};
+           tempProducts =[...tempProducts,singleItem];
+    
+       })
+       this.setState (() => {
+           return{tempProducts}
+       }
+       )
+   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import styled from "styled-components";
+import{Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import { ProductConsumer } from './context';
+
+
+
+
+export default class Product extends Component {
+  render() {
+    const {id, title, img, price, inCart} =this.props.product;
+    console.log("Product is ", this.props.product)
+    return (
+      
+      <ProductWrapper className="col-9 mx-auto col-md-6 col-blg-3 my-3"  >
+      <div className="card ">
+        <ProductConsumer>
+         {(value) => (  <div className="img-container p-5"
+          onClick={()=>value.handleDetail(id)
+          }>
+     
+     <Link to ="/details">
+     <img src ={img} alt="product" className="card-img-top"/>  
+     </Link>
+     <button className="cart-btn"
+      disabled={inCart? true:false} 
+      onClick={()=>{
+        value.addToCart(id);
+   }}
+   >
+    {inCart?(
+    <p className="text-capitalize mb-0" disabled> 
+    {""}
+    inCart
+     </p>
+     ):
+     (<i className="fas fa-cart-plus"/>)}
+     </button>
+     </div>
+      )}
+      
+        </ProductConsumer>
+        {/*card footer*/}
+        <div className="card-footer d-flex justify-content-between">
+          <p className="align-self-center mb-0">
+           {title} 
+          </p>
+          <h5 className="text-blue font-italic mb-0">
+            <span className="mr-1"> #</span>
+            {price}
+          </h5>
+          
+        </div>
+
+      </div>
+      </ProductWrapper> 
+     
+    )
+  }
+}
+
+Product.propTypes ={
+  product:PropTypes.shape({
+    id:PropTypes.number,
+    img:PropTypes.string,
+    title:PropTypes.string,
+    price:PropTypes.number,
+    inCart:PropTypes.bool
+  }).isRequired
+ };
+
+const ProductWrapper=styled.div`
+.card{
+ border-color:transparent;
+  transition:linear :all 1s linear;
+}
+.card-footer{
+  background:transparent;
+  border-top:transparent;
+  transition:linear :all 1s linear;
+}
+&:hover{
+  .card{
+    border:0.04rem solid rgba(0,0,0,0.2);
+    box-shadow:2px 2px 5px 0px rgba (0,0,0,0.2)
+  } 
+
+.card-footer{
+  background :rgba(247,247,247);
+}
+}
+.img-container{
+  position:relative;
+   overflow:hidden;
+}
+.card-img-top{
+  transition: all 4s linear;
+}
+.img-container:hover.card-img-top{
+  transform:scale(1.2);
+}
+.cart-btn{
+  position:absolute;
+  bottom:0;
+  right:0;
+  padding:0.2rem 0.4rem;
+  background:var(--lightBlue);
+  border:none;
+  color:var(--mainWhite);
+  font-size:1.4rem;
+  border-radius:0.5rem 0 0 0;
+  transform:translate(100%,100%);
+  transition :all 1s linear 
+}
+.img-container:hover .cart-btn{
+transform:translate(0,0);
+}
+.cart-btn:hover{
+  color:var(--mainBlue);
+  cursor:pointer;
+} 
+
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const storeProducts=[
+    {
+        id:1,
+        title:"Herbal shampoo",
+        img:"./img/Shampoo.jpg",
+        price:10,
+        info:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+       inCart:false,
+       count:0,
+       total:0,
+
+    },
+    {
+        id:2,
+        title:"Conditioner",
+        img:"./img/conditioner.jpeg",
+        price:10,
+       
+        info:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+        inCart:false,
+        count:0,
+        total:0,
+ 
+    },
+    {
+        id:3,
+        title:"Hair growth oil",
+        img:"./img/Hairoil.jpeg",
+        price:20,
+      
+        info:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+        inCart:false,
+        count:0,
+        total:0,
+ 
+    },
+    {
+        id:4,
+        title:"Beard oil",
+        img:"./img/coconut.jpg",
+        price:30,
+        info:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+        inCart:false,
+        count:0,
+        total:0,
+ 
+    },
+    {
+        id:5,
+        title:"Shea Butter ",
+        img:"./img/shea_butter.jpg",
+        price:40,
+        info:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+        inCart:false,
+        count:0,
+        total:0,
+ 
+    }
+]
+export const detailProduct={
+    id:5,
+    title:"hair growth shampoo detail",
+    img:"./img/shea_butter.jpg",
+    company:"Maryann",
+    info: " Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolorem perspiciatis natus quas laborum tempore, consequuntur sapiente eum nulla  odio quibusdam ipsam laboriosam, repudiandae eveniet  ut repellendus unde dolor debitis veniam.",
+    inCart:false,
+    count:0,
+
+    total:0
+
+};
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import styled from "styled-components";
+import{Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import { ProductConsumer } from './context';
+
+
+
+
+export default class Product extends Component {
+  render() {
+  //   const {id, title, img, price, inCart} =this.props.product;
+  //   console.log("Product is ", this.props.product)
+  //   return (
+      
+  //     <ProductWrapper className="col-9 mx-auto col-md-6 col-blg-3 my-3"  >
+  //     <div className="card ">
+  //       <ProductConsumer>
+  //        {(value) => (  <div className="img-container p-5"
+  //         onClick={()=>value.handleDetail(id)
+  //         }>
+     
+  //    <Link to ="/details">
+  //    <img src ={img} alt="product" className="card-img-top"/>  
+  //    </Link>
+  //    <button className="cart-btn"
+  //     disabled={inCart? true:false} 
+  //     onClick={()=>{
+  //       value.addToCart(id);
+  //  }}
+  //  >
+  //   {inCart?(
+  //   <p className="text-capitalize mb-0" disabled> 
+  //   {""}
+  //   inCart
+  //    </p>
+  //    ):
+  //    (<i className="fas fa-cart-plus"/>)}
+  //    </button>
+  //    </div>
+  //     )}
+      
+  //       </ProductConsumer>
+  //       {/*card footer*/}
+  //       <div className="card-footer d-flex justify-content-between">
+  //         <p className="align-self-center mb-0">
+  //          {title} 
+  //         </p>
+  //         <h5 className="text-blue font-italic mb-0">
+  //           <span className="mr-1"> #</span>
+  //           {price}
+  //         </h5>
+          
+  //       </div>
+
+  //     </div>
+  //     </ProductWrapper> 
+     
+  //   )
+  }
+}
+
+Product.propTypes ={
+  product:PropTypes.shape({
+    id:PropTypes.number,
+    img:PropTypes.string,
+    title:PropTypes.string,
+    price:PropTypes.number,
+    inCart:PropTypes.bool
+  }).isRequired
+ };
+
+const ProductWrapper=styled.div`
+.card{
+ border-color:transparent;
+  transition:linear :all 1s linear;
+}
+.card-footer{
+  background:transparent;
+  border-top:transparent;
+  transition:linear :all 1s linear;
+}
+&:hover{
+  .card{
+    border:0.04rem solid rgba(0,0,0,0.2);
+    box-shadow:2px 2px 5px 0px rgba (0,0,0,0.2)
+  } 
+
+.card-footer{
+  background :rgba(247,247,247);
+}
+}
+.img-container{
+  position:relative;
+   overflow:hidden;
+}
+.card-img-top{
+  transition: all 4s linear;
+}
+.img-container:hover.card-img-top{
+  transform:scale(1.2);
+}
+.cart-btn{
+  position:absolute;
+  bottom:0;
+  right:0;
+  padding:0.2rem 0.4rem;
+  background:var(--lightBlue);
+  border:none;
+  color:var(--mainWhite);
+  font-size:1.4rem;
+  border-radius:0.5rem 0 0 0;
+  transform:translate(100%,100%);
+  transition :all 1s linear 
+}
+.img-container:hover .cart-btn{
+transform:translate(0,0);
+}
+.cart-btn:hover{
+  color:var(--mainBlue);
+  cursor:pointer;
+} 
+
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import {ProductConsumer} from "./context";
+import{Link } from "react-router-dom";
+import styled from "styled-components"
+import "bootstrap/dist/css/bootstrap.min.css";
+
+export default class Details extends Component {
+  render() {
+    return (
+      <div>
+       <ProductConsumer>
+         { value => {
+          const{id,company,img,info,price,title,inCart} = value.detailProduct;
+          return(
+            <div className="container py-5">
+              <div className="row">
+                <div className=
+                "col-10 mx-auto text-center text-slanted text-blue my-5">
+                  <h1>{title}</h1>
+                  </div>
+                  </div>
+                  {/*product image */}
+                  <div className= "col-10 mx-auto col-md-6 my-3">
+                    <img src ={img} className="img-fluid" alt ="product"/>
+                  </div>
+                  <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
+                    <h2>model:{title}</h2>
+                  
+                  <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
+                  made by: <span className="text-uppercase">
+                    {company} </span>  
+                
+                  </h4>
+                  <h4 className ="text-blue">
+                    <strong>
+                      price:<span>$</span>
+                      {price}
+                    </strong>
+
+                  </h4>
+              < p className="text-capitalize.font-weight-bold.mt-3.mb-0">
+              some info about product:
+            
+               </ p>
+               <p className="text-muted lead">{info}</p>
+            <div>
+             <Link to="/">
+              <ButtonContainer>back to products</ButtonContainer>
+              </Link>
+              <ButtonContainer cart
+              disabled={inCart?true:false}
+              onClick={()=>{
+                value.addToCart(id)
+              }}
+              >
+                {inCart? "inCart":"add to cart"}
+              </ButtonContainer>
+            </div>
+            </div>
+              
+                </div>
+             
+          
+          )
+         }}
+       </ProductConsumer>
+      </div>
+    )
+  }
+}
+
+const ButtonContainer= styled.button`
+text-transform:capitalize;
+font-size:1.43rem;
+ 
+border:0.1rem solid var(--lightBlue) ;
+border-color:${props => (props.cart ? "var(--mainYellow)":"var(--lightBlue)")};
+color:${props =>props.cart?"var(--mainYellow)":"var(--lightBlue)"}; 
+border-radius:0.9rem;
+padding:0.2rem 0.5rem
+cursor:pointer;
+margin:0.2rem 0.5rem 0.2rem 0;
+transition:all 0.5s ease-in-out;
+&:hover{
+  background:${props =>props.cart?"var(--mainYellow)":"var(--lightBlue)"}; 
+  color:var(--mainBlue);
+  &:focus{
+    outline:none;
+  }
+}
+`
+
+
+

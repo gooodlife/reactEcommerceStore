@@ -1,0 +1,170 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+function Nav () { 
+  return (
+  
+  <nav className="navbar navbar-expand-sm navbar-dark bg-danger px-sm-5"  >
+      <div>
+      <h1>logo</h1>
+      <ul>
+      <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/Cart">Cart</Link>
+          </li>
+          <li>
+            <Link to="/Details">Details</Link>
+          </li>
+
+      </ul>
+         </div>
+
+    
+  </nav>
+  import React, { Component } from 'react';
+import React, {Component} from 'react';
+import{storeProducts,detailProduct} from "./Data";
+const ProductContext = React.createContext ();
+
+
+
+
+
+
+class ProductProvider extends Component{ 
+    // state={
+    //     products:[storeProducts] ,
+    //     detailProduct:detailProduct,
+    //     // cart:[]
+    
+    // };
+   
+//   getItem = (id) =>{
+//       const product= this.state.products.find(item =>item.id===id);
+//       return product;
+//   };
+
+
+//     handleDetail=(id)=>{
+//        const product= this.getItem(id);
+//        this.setState(() =>{
+//            return{detailProduct:product}
+//        });
+//     };
+//     addToCart=id=>{
+//        let tempProducts = [...this.state.products];
+//        const index = tempProducts.indexOf(this.getItem(id))
+//         ;
+//        const product=tempProducts[index];
+//        product.inCart=true;
+//        product.count=1;
+//        const price=product.price;
+//        product.total=price;
+    
+//     this.setState(()=>{
+//     return {products:tempProducts,cart:[...this.state.cart,product]};
+
+//     },
+//     );
+
+//     };
+// Provider
+// Consumer
+
+render() {
+     
+    
+        return (
+           
+            <ProductContext.Provider value ="hello from context">
+                {this.props.children}
+                </ProductContext.Provider>
+        );
+    }
+}
+const ProductConsumer= ProductContext.Consumer;
+export{ProductProvider,ProductConsumer}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component,} from 'react';
+import Product from "./Product"
+import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useContext,ProductContext } from "react";
+import Title from "./Title";
+import {storeProducts} from ".data";
+import {ProductConsumer} from ".context";
+
+
+
+import Title from "./Title"
+
+import{ProductConsumer} from "./context";
+
+export default class Home extends Component{
+  
+  
+ render(){
+   console.log(this.state.products);
+  
+  return(
+  
+    <React.Fragment> 
+      <div className="py-5">
+        <div className= "container">
+            <Title name ="our" title="products"/>
+          
+          <div className="row">
+        <ProductConsumer>
+          {value =>{
+            console.log('hey', value);
+        return value.products.map(product => {
+          return <Product key= {product.id}
+          product= {product}/>;
+        });
+          }} 
+
+        </ProductConsumer>
+        </div>
+      </div>
+    </div>
+    </React.Fragment>
+  
+    //productlist/home
+
+  )
+ }
+}
+   const HomeList= ()=> {
+            const value =useContext (ProductContext);
+          return(
+            <div>
+              <h1>{value}</h1>
+            </div>
+          )
+            };
+           
