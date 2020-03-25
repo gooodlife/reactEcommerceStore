@@ -10,8 +10,8 @@ export default class YNavbar extends Component {
            <nav className="navbar navbar-expand-sm bg-primary  navbar-dark px-sm-5">
 <Link to="/">
     <img src= {logo} alt="store " className="navbar-brand"/>
-
 </Link>
+
 <ul className= "navbar-nav align-item-center">
     <li className="nav-item ml-5">
         <Link to="/" className="nav-link">
